@@ -53,7 +53,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        // return $request->all();    
+        // $category->update($request->all());
+        $category->update(
+            [
+                'name'=> $request->name, 
+                'slug'=> str_slug($request->name)
+            ]
+        );
+        return response(null, Response::HTTP_ACCEPTED);
     }
 
     /**
