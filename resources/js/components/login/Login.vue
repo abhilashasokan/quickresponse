@@ -1,0 +1,40 @@
+<template>
+  <v-container>
+    <v-form @submit.prevent="login" method="POST">
+      <v-text-field v-model="form.email" type="email" label="E-mail" required></v-text-field>
+      <v-text-field v-model="form.password" type="password" label="Password" required></v-text-field>
+
+      <v-btn color="green" type="submit">Login</v-btn>
+    </v-form>
+  </v-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        email: null,
+        password: null
+      }
+    };
+  },
+  methods: {
+    login() {
+      alert("Login pressed!");
+      axios
+        .post("api/auth/login", this.form)
+        .then(res => console.log(res.data))
+        .catch(function(error) {
+          console.log(error);
+        })
+        .then(function() {
+          console.log('login process completed');
+        });
+    }
+  }
+};
+</script>
+
+<style>
+</style>
