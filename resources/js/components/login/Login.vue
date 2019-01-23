@@ -21,16 +21,7 @@ export default {
   },
   methods: {
     login() {
-      alert("Login pressed!");
-      axios
-        .post("api/auth/login", this.form)
-        .then(res => console.log(res.data))
-        .catch(function(error) {
-          console.log(error);
-        })
-        .then(function() {
-          console.log('login process completed');
-        });
+      User.login(this.form)
     }
   }
 };
