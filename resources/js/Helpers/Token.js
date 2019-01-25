@@ -1,5 +1,3 @@
-import { isFulfilled } from "q";
-
 class Token {
 
     isValid(token) {
