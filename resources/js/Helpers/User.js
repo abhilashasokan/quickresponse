@@ -7,10 +7,8 @@ class User {
             .post("api/auth/login", data)
             .then(res => this.responseAfterLogin(res))
             .catch(function (error) {
-                console.log(error);
-            })
-            .then(function () {
-                //console.log('login process completed');
+                console.log(error.response.data.errors);
+                return error.response.data.errors;
             });
     }
 
@@ -19,9 +17,8 @@ class User {
         const username = res.data.user
         if(Token.isValid(access_token)) {
             AppStorage.store(username,access_token)
+            window.location = '/forum';
         }
-        
-        Token.payload(res.data.access_token);
     }
 
     hasToken() {
@@ -38,6 +35,7 @@ class User {
 
     logout() {
         AppStorage.clear()
+        window.location = '/forum'
     }
 
     name() {

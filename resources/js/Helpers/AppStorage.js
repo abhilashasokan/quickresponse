@@ -13,12 +13,12 @@ class AppStorage {
     }
 
     clear() {
-        localStorage.removeItem('token');
+        localStorage.removeItem('AccessToken');
         localStorage.removeItem('user');
     }
 
     getToken() {
-        return localStorage.getItem('token');
+        return localStorage.getItem('AccessToken');
     }
 
     getUser() {
