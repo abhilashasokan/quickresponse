@@ -22,7 +22,7 @@ class User {
     }
 
     hasToken() {
-        const storedToken = AppStorage.getToken();
+        const storedToken = AppStorage.getToken(); 
         if(storedToken) {
             return Token.isValid(storedToken) ? true : false
         }
@@ -44,11 +44,15 @@ class User {
         }
     }
 
-    if() {
+    id() {
         if(this.loggedIn()) {
             const payload = Token.payload(AppStorage.getToken())
             return payload.sub
         }
+    }
+
+    own(id) {
+        return this.id() == id
     }
 
 }

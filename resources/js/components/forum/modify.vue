@@ -1,31 +1,23 @@
 <template>
   <v-container>
-    <v-form @submit.prevent="create">
+    <v-form @submit.prevent="update">
       <v-text-field v-model="form.title" type="text" label="Title" required></v-text-field>
       <span class="red--text" v-if="errors.title">{{errors.title}}</span>
-      <v-autocomplete
-        :items="categories"
-        v-model="form.category_id"
-        item-text="name"
-        item-value="id"
-        label="Category"
-        autocomplete
-      ></v-autocomplete>
       <markdown-editor v-model="form.body" ref="markdownEditor"></markdown-editor>
-
-      <v-btn color="green" type="submit">Save</v-btn>
+      <v-btn color="teal" type="submit" @click="cancel">Save</v-btn>
+      <v-btn color="delete" @click="cancel">Cancel</v-btn>
     </v-form>
   </v-container>
 </template>
 
 <script>
 export default {
+  props: ["questionObject"],
   data() {
     return {
       form: {
         title: null,
-        category_id: null,
-        body:null
+        body: null
       },
       errors: {},
       categories: {}
@@ -34,11 +26,18 @@ export default {
   created() {
     axios.get("/api/category/").then(res => (this.categories = res.data.data));
   },
+  mounted() {
+    this.form = this.questionObject;
+  },
   methods: {
-    create() {
-        axios.post('/api/questions', this.form)
-        .then(res => this.$router.push(res.data.path))
-        .catch(error => this.errors = error.response.data.error)
+    cancel() {
+      EventBus.$emit("CancelQuestionEditing");
+    },
+    update() {
+      axios
+        .patch(`/api/questions/${this.form.slug}`, this.form)
+        .then(res => this.cancel)
+        .catch(error => (this.errors = error.response.data.error));
     }
   }
 };
