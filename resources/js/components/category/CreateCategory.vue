@@ -71,6 +71,7 @@ export default {
           this.categories.unshift(res.data);
           this.form.name = null;
           this.editSlug = null
+          this.loadCategory()
         })
         .catch(error => console.log(error.response.data));
     },

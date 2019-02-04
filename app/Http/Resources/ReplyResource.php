@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\QuestionResource;
 class ReplyResource extends JsonResource
 {
     /**
@@ -18,8 +18,9 @@ class ReplyResource extends JsonResource
             'id'                => $this->id,
             'question'          => $this->question->title,
             'reply'             => $this->body,            
+            'user_id'           => $this->user_id,
             'user'              => $this->user->name,
-            'created on'        => $this->created_at->diffForHumans(),
+            'created_at'        => $this->created_at->diffForHumans(),
         ];
     }
 }

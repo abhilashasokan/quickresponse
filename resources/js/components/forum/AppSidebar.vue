@@ -5,7 +5,7 @@
     </v-toolbar>
 
     <v-list>
-        <v-list-tile v-for="category in categories">
+        <v-list-tile v-for="category in categories" :key="category.id">
             <v-list-tile-content>
                 <v-list-tile-title>{{category.name}}</v-list-tile-title>
             </v-list-tile-content>
