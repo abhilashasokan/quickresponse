@@ -3,6 +3,7 @@
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title>Quick Response</v-toolbar-title>
     <v-spacer></v-spacer>
+    <app-notification v-if="loggedIn"></app-notification>
     <div class="hidden-sm-and-down">
       <router-link v-for="item in items" :key="item.title" v-if="item.show" :to="item.to">
         <v-btn flat>{{item.title}}</v-btn>
@@ -10,11 +11,13 @@
     </div>
   </v-toolbar>
 </template>
-
 <script>
+import AppNotification from './AppNotification'
 export default {
+  components: {AppNotification},
   data() {
     return {
+      loggedIn: User.loggedIn(),
       items: [
         { title: "Forum", to: "/forum", show: true },
         { title: "Login", to: "/login", show: !User.loggedIn() },     

@@ -3,7 +3,7 @@
     <modify v-if="editing" :questionObject="question"></modify>
     <show-question :questionObject="question" v-else></show-question>  
     <v-container>
-      <replies :replies="question.replies"></replies>
+      <replies :question="question"></replies>
       <new-reply :questionSlug="question.slug"></new-reply>
     </v-container>
   </div>

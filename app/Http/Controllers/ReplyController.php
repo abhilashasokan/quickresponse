@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Question;
 use Illuminate\Http\Response;
 use App\Http\Resources\ReplyResource;
+use App\Notifications\newReplyNotification;
 
 class ReplyController extends Controller
 {
@@ -28,8 +29,13 @@ class ReplyController extends Controller
      */
     public function store(Question $question, Request $request)
     {
-        $replies = $question->replies()->create($request->all());
-        return response(['reply' => new ReplyResource($replies)], Response::HTTP_CREATED);
+        $reply = $question->replies()->create($request->all());
+        $user = $question->user;
+        if($reply->user_id !== $question->user_id) {
+            $user->notify(new newReplyNotification($reply));
+        }        
+        return response(['reply' => new ReplyResource($reply)], Response::HTTP_CREATED);
+
     }
 
     /**
@@ -66,6 +72,6 @@ class ReplyController extends Controller
     public function destroy(Question $question, Reply $reply)
     {
         $reply->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_OK);
     }
 }
